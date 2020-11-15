@@ -111,8 +111,8 @@ def readme_header():
         readme.write('# Kattis\n')
         readme.write('Solutions for a couple of Coding-Riddles on [Kattis](https://open.kattis.com)\n')
         readme.write('\n')
-        readme.write("Project build with [Kattis_ProjectManager](https://github.com/Charontid/Kattis/blob/master/kattis.py")
-        
+        readme.write("Project build with [Kattis_ProjectManager](https://github.com/Charontid/Kattis_ProjectBuilder)\n")
+        readme.write()
 
 
 
