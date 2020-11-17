@@ -12,7 +12,7 @@ LANGUAGES = {'cpp':'C++', 'py':'Python3', 'rs':'Rust'}
 def main(*args):
     check_project_structure()
     git_commit_recent_changes()
-
+    build_readme()
 
 
 def check_project_structure():
@@ -62,6 +62,21 @@ def write_gitignore():
 def get_repository():
     """returns the remote url from .git/config, removes the .git at the end"""
     return os.popen("git remote get-url origin").read().strip()[:-4]
+
+
+def git_commit_recent_changes():
+    newly_added = os.popen("git ls-files --others --exclude-standard").read().split('\n')
+    if newly_added[-1] == '':
+        newly_added.pop()
+
+    modified = os.popen("git ls-files -m").read().split('\n')
+    if modified[-1] == '':
+        modified.pop()
+
+    for file in chain(newly_added, modified):
+        os.system(f"git add {file}")
+    os.system('git commit -m "adding new solutions"')
+    os.system('git push -u origin main')
 
 
 def scrape_kattis(num_pages=29):
@@ -171,19 +186,7 @@ def tracked_files():
     return solved
 
 
-def git_commit_recent_changes():
-    newly_added = os.popen("git ls-files --others --exclude-standard").read().split('\n')
-    if newly_added[-1] == '':
-        newly_added.pop()
 
-    modified = os.popen("git ls-files -m").read().split('\n')
-    if modified[-1] == '':
-        modified.pop()
-
-    for file in chain(newly_added, modified):
-        os.system(f"git add {file}")
-    os.system('git commit -m "adding new solutions"')
-    os.system('git push -u origin main')
 
 
 def readme_header():
