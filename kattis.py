@@ -236,11 +236,17 @@ def match_problems(solved):
         print("please check the problem, wether or not the problem-id's are correct:")
         print("unmachted Problems: ", len(solved))
         print(solved.keys())
+        while True:
+            choice = input("Do you want to force scraping on the next run? (0):No, (1):Yes")
+            if choice in {'0', '1'}:
+                break
     return place_in_readme#, scraping_flag
+
 
 def get_kattis_profile():
     with open("data/kattis_profile.text", "r", encoding="UTF-8") as profile:
         return next(profile)
+
 
 def readme_header():
     """
