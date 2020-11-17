@@ -246,13 +246,15 @@ def readme_header():
     """
     with open('README.md', 'w', encoding='UTF-8') as readme:
         readme.write('# Kattis\n')
-        readme.write('Solutions for a couple of Coding-Riddles on [Kattis](https://open.kattis.com)\n')
+        readme.write('Solutions for a couple of Coding-Riddles on [Kattis](https://open.kattis.com).\n')
+        readme.write('[My Profile](https://open.kattis.com/users/caskuda) on Kattis.\n')
         readme.write('\n')
         readme.write("Project build with [Kattis_ProjectManager](https://github.com/Charontid/Kattis_ProjectBuilder)\n")
         readme.write('\n')
         readme.write('## Problems\n')
         readme.write('| Problem Description | Languages | Difficulty |\n')
         readme.write('| - | - | - |\n')
+
 
 if __name__ == '__main__':
     main()
