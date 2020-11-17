@@ -12,9 +12,9 @@ LANGUAGES = {'cpp':'C++', 'py':'Python3', 'rs':'Rust'}
 
 def main():
     pass
-    check_project_structure()
-    git_commit_recent_changes()
-    build_readme()
+    #check_project_structure()
+    #git_commit_recent_changes()
+    #build_readme()
 
 
 def check_project_structure():
@@ -258,6 +258,39 @@ def readme_header():
         readme.write('| - | - | - |\n')
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    print(*sys.argv)
-    main()
+    # adding functionality for subfolder-management
+    if len(sys.argv) > 1:
+        if len(sys.argv) == 2 and sys.argv[1] == "scrape":
+            print('just scraping')
+            scrape_kattis()
+        elif len(sys.argv) == 4 and sys.argv[1] == 'add':
+            print(sys.argv[1:])
+            directory = ''.join(['problems/', sys.argv[2],'/'])
+            file = '.'.join([sys.argv[2], sys.argv[3]])
+            if not os.path.exists(directory):
+                os.makedirs(diretory)
+
+            if not os.path.exists(''.join([directory, file])):
+                with open(''.join([directory, file]), "w", encoding="UTF-8") as target:
+                    target.write("test")
+    else:
+        main()
