@@ -7,7 +7,8 @@ import csv
 from collections import defaultdict
 from itertools import chain
 LANGUAGES = {'cpp':'C++', 'py':'Python3', 'rs':'Rust'}
-
+# search for : TODO
+# marking places for further rework
 
 def main(*args):
     check_project_structure()
@@ -157,19 +158,35 @@ def get_kattis_profile():
 #### BUILDING README
 def build_readme():
     solved = tracked_files()
-    print('solved: ')
-    for problem in solved:
-        print(problem)
+    #print('solved: ')
+    #for problem in solved:
+    #    print(problem)
     #Match to Kattis data:
+    readme_header()
     place_in_readme = match_problems(solved)
-    """
-    #place_in_readme, scraping_flag = match_problems(solved)
-    #Write the readme.md
-    header(scraping_flag)
     readme_table(place_in_readme)
-    os.system("git add readme.md")
-    return scraping_flag
-    """
+    os.system("git add README.md")
+    os.system('git commit -m "README - update"')
+    os.system('git push -u origin main')
+
+
+def readme_table(place_in_readme):
+    """Adding the problem table"""
+    # sort descending
+    place_in_readme.sort(key=lambda x: -float(x.get('Difficulty')))
+
+    with open('readme.md', 'a', encoding='UTF-8') as readme: #TODO Most likely either making a global or reading from a user file
+        lang_rev = {
+            'py' : 'Python3',
+            'cpp' : 'C++'
+        }
+        for problem in place_in_readme:
+            description = f"[{problem['ProblemName']}]({problem['LinkToKattis']})"
+            langs = list()
+            for link in problem['FileLinks']:
+                langs.append(f"[{lang_rev[link.split('.')[-1]]}]({link})")
+            difficulty = problem.get('Difficulty')
+            readme.write(f"| {description} | {', '.join(langs)} | {difficulty} |\n")
 
 
 def tracked_files():
