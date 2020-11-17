@@ -10,7 +10,8 @@ LANGUAGES = {'cpp':'C++', 'py':'Python3', 'rs':'Rust'}
 # search for : TODO
 # marking places for further rework
 
-def main(*args):
+def main():
+    pass
     check_project_structure()
     git_commit_recent_changes()
     build_readme()
@@ -258,4 +259,5 @@ def readme_header():
 
 
 if __name__ == '__main__':
+    print(*sys.argv)
     main()
