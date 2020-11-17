@@ -183,6 +183,7 @@ def git_commit_recent_changes():
     for file in chain(newly_added, modified):
         os.system(f"git add {file}")
     os.system('git commit -m "adding new solutions"')
+    os.system('git push -u origin main')
 
 
 def readme_header():
