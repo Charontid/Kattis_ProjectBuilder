@@ -29,10 +29,6 @@ def check_project_structure():
         print('scraping')
         scrape_kattis()
 
-    #if not os.path.exists("README.md"):
-    #    readme_header()
-    #build_readme()
-
 
 def initialize_git():
     ### Maybe i should add email-validation and same for github repo , kattis profile
@@ -158,9 +154,6 @@ def get_kattis_profile():
 #### BUILDING README
 def build_readme():
     solved = tracked_files()
-    #print('solved: ')
-    #for problem in solved:
-    #    print(problem)
     #Match to Kattis data:
     readme_header()
     place_in_readme = match_problems(solved)
@@ -266,15 +259,3 @@ def readme_header():
 
 if __name__ == '__main__':
     main()
-    """
-    if len(sys.argv) == 3:
-        main(*sys.argv[1:])
-    elif len(sys.argv) == 1:
-        main()
-    """
-    #else:
-    #    raise SyntaxError("""Insufficient arguments:
-    #    call with 0 arguments: push recent changes to github repository
-    #    call with 2 arguments: probem id and filesuffix one of (.py, .cpp, ...)
-    #    to create a new problem
-    #    """)
