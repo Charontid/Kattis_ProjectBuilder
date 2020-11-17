@@ -250,7 +250,9 @@ def readme_header():
         readme.write('\n')
         readme.write("Project build with [Kattis_ProjectManager](https://github.com/Charontid/Kattis_ProjectBuilder)\n")
         readme.write('\n')
-
+        readme.write('## Problems\n')
+        readme.write('| Problem Description | Languages | Difficulty |\n')
+        readme.write('| - | - | - |\n')
 
 if __name__ == '__main__':
     main()
