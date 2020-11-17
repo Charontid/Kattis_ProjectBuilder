@@ -157,12 +157,13 @@ def get_kattis_profile():
 #### BUILDING README
 def build_readme():
     solved = tracked_files()
-    print('solved')
+    print('solved: ')
     for problem in solved:
         print(problem)
     #Match to Kattis data:
+    place_in_readme = match_problems(solved)
     """
-    place_in_readme, scraping_flag = match_problems(solved)
+    #place_in_readme, scraping_flag = match_problems(solved)
     #Write the readme.md
     header(scraping_flag)
     readme_table(place_in_readme)
@@ -186,6 +187,39 @@ def tracked_files():
     return solved
 
 
+def match_problems(solved):
+    with open('data/kattis_problems.csv', 'r', encoding='UTF-8') as kattiscsv:
+        fieldnames = next(kattiscsv).strip().split(';')
+        kattis = csv.DictReader(
+            kattiscsv,
+            delimiter=';',
+            fieldnames=fieldnames,
+            restkey="Garbage",
+            skipinitialspace=True
+        )
+
+        place_in_readme = list()
+        for problem in kattis:
+            matched_languages = solved.get(problem['ID'])
+            if matched_languages: # not None --> at least one file matching
+                #Building Links to the language-specific files:
+                file_links = list()
+                for language in matched_languages:
+                    file_links.append('.'.join([problem.get('LinkToGithub'), language]))
+
+                problem['FileLinks'] = file_links
+                problem['Languages'] = matched_languages
+                place_in_readme.append(problem)
+                #remove matches from solved:
+                del solved[problem['ID']]
+
+    scraping_flag = True if len(solved) > 1 else False
+    if scraping_flag == True:
+        print("MAYBE THERE IS STILL A BUG")
+        print("please check the problem, wether or not the problem-id's are correct:")
+        print("unmachted Problems: ", len(solved))
+        print(solved.keys())
+    return place_in_readme#, scraping_flag
 
 
 
