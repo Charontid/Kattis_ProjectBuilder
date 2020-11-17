@@ -6,15 +6,15 @@ from time import sleep
 import csv
 from collections import defaultdict
 from itertools import chain
+import wget
 LANGUAGES = {'cpp':'C++', 'py':'Python3', 'rs':'Rust'}
 # search for : TODO
 # marking places for further rework
 
 def main():
-    pass
-    #check_project_structure()
-    #git_commit_recent_changes()
-    #build_readme()
+    check_project_structure()
+    git_commit_recent_changes()
+    build_readme()
 
 
 def check_project_structure():
@@ -151,8 +151,6 @@ def get_kattis_profile():
         return next(source)
 
 
-
-#### BUILDING README
 def build_readme():
     solved = tracked_files()
     #Match to Kattis data:
@@ -261,7 +259,22 @@ def readme_header():
 
 
 
+def get_problem_information(id):
+    with open('data/kattis_problems.csv', 'r', encoding='UTF-8') as kattiscsv:
+        fieldnames = next(kattiscsv).strip().split(';')
+        kattis = csv.DictReader(
+            kattiscsv,
+            delimiter=';',
+            fieldnames=fieldnames,
+            restkey="Garbage",
+            skipinitialspace=True
+        )
 
+        for problem in kattis:
+            if id == problem.get('ID'):
+                return problem
+        print('not found')
+        return -1
 
 
 
@@ -280,17 +293,43 @@ if __name__ == '__main__':
     # adding functionality for subfolder-management
     if len(sys.argv) > 1:
         if len(sys.argv) == 2 and sys.argv[1] == "scrape":
-            print('just scraping')
             scrape_kattis()
         elif len(sys.argv) == 4 and sys.argv[1] == 'add':
             print(sys.argv[1:])
             directory = ''.join(['problems/', sys.argv[2],'/'])
             file = '.'.join([sys.argv[2], sys.argv[3]])
             if not os.path.exists(directory):
-                os.makedirs(diretory)
+                os.makedirs(directory)
+            problem = get_problem_information(sys.argv[2])
+            print(problem)
 
+            com = ''
+            if sys.argv[3] == 'cpp':
+                com = '//'
+            elif sys.argv[3] == 'py':
+                com = '#'
             if not os.path.exists(''.join([directory, file])):
                 with open(''.join([directory, file]), "w", encoding="UTF-8") as target:
-                    target.write("test")
+                    target.write(f'{com}Name: {problem.get("ProblemName")}\n')
+                    target.write(f'{com}Problem-ID: {problem.get("ID")}\n')
+                    target.write(f'{com}Link: {problem.get("LinkToKattis")}\n')
+                    target.write(f'{com}Difficulty: {problem.get("Difficulty")}\n')
+
+                    with open(f'data/bodies/body.{sys.argv[3]}', 'r', encoding="UTF-8") as body:
+                        for line in body:
+                            target.write(line)
+            """
+            # 403 Error. Have to look into Authentification
+            #Download input - output
+            url = '/'.join([
+                "https://open.kattis.com",
+                "problems",
+                problem.get('ID'),
+                "statement",
+                "samples.zip"
+            ])
+            #dest = f'problems/{problem.get("ID")}/data/samples.zip'
+            #wget.download("https://open.kattis.com/problems/autori/file/statement/samples.zip", "sample.zip")#dest)
+            """
     else:
         main()
