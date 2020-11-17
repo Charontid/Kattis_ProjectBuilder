@@ -175,7 +175,7 @@ def readme_table(place_in_readme):
     # sort descending
     place_in_readme.sort(key=lambda x: -float(x.get('Difficulty')))
 
-    with open('readme.md', 'a', encoding='UTF-8') as readme: #TODO Most likely either making a global or reading from a user file
+    with open('README.md', 'a', encoding='UTF-8') as readme: #TODO Most likely either making a global or reading from a user file
         lang_rev = {
             'py' : 'Python3',
             'cpp' : 'C++'
@@ -242,14 +242,14 @@ def match_problems(solved):
 
 def readme_header():
     """
-    Writing the Repositoriy Description to readme.md
+    Writing the Repositoriy Description to README.md
     """
     with open('README.md', 'w', encoding='UTF-8') as readme:
         readme.write('# Kattis\n')
         readme.write('Solutions for a couple of Coding-Riddles on [Kattis](https://open.kattis.com)\n')
         readme.write('\n')
         readme.write("Project build with [Kattis_ProjectManager](https://github.com/Charontid/Kattis_ProjectBuilder)\n")
-        readme.write()
+        readme.write('\n')
 
 
 if __name__ == '__main__':
