@@ -10,13 +10,9 @@ LANGUAGES = {'cpp':'C++', 'py':'Python3', 'rs':'Rust'}
 
 
 def main(*args):
-    #check_project_structure()
-    git_recent_changes()
+    check_project_structure()
+    git_commit_recent_changes()
 
-    #with open("data/kattis_problems.csv", "r", encoding='UTF-8') as source:
-    #    for line in source:
-    #        print(line)
-    #        print()
 
 
 def check_project_structure():
@@ -175,44 +171,18 @@ def tracked_files():
     return solved
 
 
-def git_recent_changes():
+def git_commit_recent_changes():
     newly_added = os.popen("git ls-files --others --exclude-standard").read().split('\n')
     if newly_added[-1] == '':
         newly_added.pop()
+
     modified = os.popen("git ls-files -m").read().split('\n')
-    print('modified: ', modified)
     if modified[-1] == '':
         modified.pop()
 
     for file in chain(newly_added, modified):
         os.system(f"git add {file}")
-
-    print(newly_added)
-    print(modified)
-    """
-    if newly_added and modified:
-        chained = chain([newly_added], modified)
-    elif newly_added and not modified:
-        chained = newly_added
-    elif not newly_added and modified:
-        chained = modified
-    """
-    """
-    else:
-        chained = None
-    if chained:
-        for file in chained:
-            os.system(f"git add {file}")
-    """
-
-
-
-
-
-
-
-
-
+    os.system('git commit -m "adding new solutions"')
 
 
 def readme_header():
