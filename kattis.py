@@ -238,7 +238,9 @@ def match_problems(solved):
         print(solved.keys())
     return place_in_readme#, scraping_flag
 
-
+def get_kattis_profile():
+    with open("data/kattis_profile.text", "r", encoding="UTF-8") as profile:
+        return next(profile)
 
 def readme_header():
     """
@@ -247,7 +249,7 @@ def readme_header():
     with open('README.md', 'w', encoding='UTF-8') as readme:
         readme.write('# Kattis\n')
         readme.write('Solutions for a couple of Coding-Riddles on [Kattis](https://open.kattis.com).\n')
-        readme.write('[My Profile](https://open.kattis.com/users/caskuda) on Kattis.\n')
+        readme.write('[My Profile]({get_kattis_profile()}) on Kattis.\n')
         readme.write('\n')
         readme.write("Project build with [Kattis_ProjectManager](https://github.com/Charontid/Kattis_ProjectBuilder)\n")
         readme.write('\n')
